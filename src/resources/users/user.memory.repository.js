@@ -8,4 +8,5 @@ const createUser = async (params) => {
   DB.users.push(newUser);
   return newUser;
 }
-module.exports = { getAll, createUser };
+const getUser = async (id) => DB.users.find((item) => item.id === id)
+module.exports = { getAll, createUser, getUser };
