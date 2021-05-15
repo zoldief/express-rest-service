@@ -9,4 +9,14 @@ const createUser = async (params) => {
   return newUser;
 }
 const getUser = async (id) => DB.users.find((item) => item.id === id)
-module.exports = { getAll, createUser, getUser };
+const updateUser = async (id, params) => {
+  const user = DB.users.find((item) => item.id === id);
+  DB.users[DB.users.indexOf(user)] = new User({ id, ...params })
+  return user
+}
+const deleteUser = async (id) => {
+  const user = DB.users.find((item) => item.id === id)
+  DB.users.splice(DB.users.indexOf(user), 1);
+  return user
+}
+module.exports = { getAll, createUser, getUser,  updateUser, deleteUser }
