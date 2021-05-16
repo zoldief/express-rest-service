@@ -1,6 +1,24 @@
-const getAll = async () => {
-  // TODO: mock implementation. should be replaced during task development
-  return [];
-};
+const { v4: uuid } = require('uuid');
+const DB = require("../../common/inMemoryDB");
+const User = require("./user.model");
 
-module.exports = { getAll };
+const getAll = async () => DB.users;
+const createUser = async (params) => {
+  const newUser = new User({ id: uuid(), ...params });
+  DB.users.push(newUser);
+  return newUser;
+}
+const getUser = async (id) => DB.users.find((item) => item.id === id)
+const updateUser = async (id, params) => {
+  const user = DB.users.find((item) => item.id === id);
+  DB.users[DB.users.indexOf(user)] = new User({ id, ...params })
+  return user
+}
+const deleteUser = async (id) => {
+  const user = DB.users.findIndex(item => item.id === id);
+   if (user !== -1) {
+     DB.users.splice(user, 1);
+   }
+   return user;
+}
+module.exports = { getAll, createUser, getUser,  updateUser, deleteUser }
