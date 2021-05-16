@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('express').Router({ mergeParams: true });
 const User = require('./user.model');
 const usersService = require('./user.service');
 
@@ -34,8 +34,8 @@ router.route('/:id').put(async (req, res) => {
 router.route('/:id').delete(async (req, res) => {
   const user = await usersService.deleteUser(req.params.id);
   res
-    .status(user ? 200: 404)
-    .json(user? User.toResponse(user) : {});
+    .status(user !== -1 ? 204 : 404)
+    .json();
 })
 
 module.exports = router;
